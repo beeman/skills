@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create PR"
+  short_description: "Prepare a branch, commit, and GitHub PR"
+  default_prompt: "Use $gh-pr-create to create a feature branch if needed, prepare the commit, add any required changeset, push the branch with approval, and open a GitHub PR with gh."
