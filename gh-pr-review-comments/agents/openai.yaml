@@ -1,0 +1,4 @@
+interface:
+  display_name: "Address PR Review Comments"
+  short_description: "Triage and apply GitHub PR review comments"
+  default_prompt: "Use $gh-pr-review-comments to triage GitHub PR review comments, apply accepted fixes on the current branch, resolve threads, and request fresh review from the relevant human reviewers and configured bots."
