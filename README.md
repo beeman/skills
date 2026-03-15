@@ -5,6 +5,7 @@ Reusable agent skills published from `beeman/skills`.
 ## Available Skills
 
 - `gh-issue-kickoff`: Start work on a GitHub issue with a readiness gate and execution-ready plan.
+- `gh-pr-create`: Prepare local changes for review by creating a branch, committing cleanly, pushing, and opening a GitHub PR.
 - `gh-pr-review-comments`: Handle GitHub PR review comments on an existing feature branch.
 
 ## Use This Repository With `skills`
@@ -25,6 +26,7 @@ Install a single skill instead of everything in the repository:
 
 ```bash
 npx skills add -g beeman/skills --skill gh-issue-kickoff
+npx skills add -g beeman/skills --skill gh-pr-create
 npx skills add -g beeman/skills --skill gh-pr-review-comments
 ```
 
@@ -44,6 +46,7 @@ Remove a specific skill:
 
 ```bash
 npx skills remove -g gh-issue-kickoff
+npx skills remove -g gh-pr-create
 npx skills remove -g gh-pr-review-comments
 ```
 
