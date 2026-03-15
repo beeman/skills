@@ -18,7 +18,7 @@ Use this skill when the user wants the current work packaged into a reviewable G
 7. If the repo uses Changesets, add the smallest accurate changeset before pushing.
 8. Follow the repo and user push policy. If explicit user approval is required before pushing, stop and get it.
 9. Push the feature branch to GitHub.
-10. Create the PR with `gh pr create --fill`.
+10. Create the PR with `gh pr create --fill` when the commit title and body are already clean. If you need to set or repair the PR body manually, pass actual multiline text, not literal `\n` escape sequences.
 11. Report the branch name, commit SHA, changeset status, and PR URL.
 
 ## Branch Rules
@@ -32,6 +32,7 @@ Use this skill when the user wants the current work packaged into a reviewable G
 
 - Always run `git branch --show-current` before each commit.
 - Keep the commit body informative and non-empty.
+- Use real newlines in multi-paragraph commit bodies. Prefer repeated `git commit -m` flags, an editor, or a file; never embed literal `\n` sequences and expect Git or GitHub to render them.
 - Match existing commit style from nearby history before defaulting to conventional commits.
 
 ## Changeset Rules
@@ -47,5 +48,6 @@ GitHub CLI commands that require network access should be run outside the sandbo
 - Never push without explicit user approval when repo or user policy requires approval.
 - Push only the feature branch you are preparing for review.
 - Use `gh pr create --fill` so the PR title and body inherit from the commit when that matches the repo workflow.
+- If you provide or edit a PR body explicitly, use actual multiline text such as `--body-file` or shell quoting that produces real line breaks, not escaped `\n` sequences.
 - If the branch already has an open PR, update that PR instead of creating a duplicate.
 - If the push or PR step is blocked, stop and report the blocker clearly.

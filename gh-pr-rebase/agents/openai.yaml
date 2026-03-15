@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rebase PR Branch"
+  short_description: "Rebase a PR branch and resolve conflicts"
+  default_prompt: "Use $gh-pr-rebase to refresh the current PR branch onto the default branch, resolve any rebase conflicts carefully, and update the remote branch safely after approval."
