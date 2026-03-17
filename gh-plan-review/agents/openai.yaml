@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review GitHub Plan"
+  short_description: "Pressure-test a GitHub implementation plan"
+  default_prompt: "Use $gh-plan-review to review and pressure-test this GitHub issue, PR, or branch plan before coding, identify the material risks and tradeoffs, and finish with a fixed review summary."

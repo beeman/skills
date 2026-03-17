@@ -7,19 +7,25 @@ description: Create a GitHub pull request from local repo changes. Use when Code
 
 Use this skill when the user wants the current work packaged into a reviewable GitHub pull request. Start by getting onto the correct feature branch before other work, keep the commit history clean, and take the change all the way through push and PR creation.
 
+## Boundary Rules
+
+- This skill packages already-decided work for review. It does not challenge or redesign the implementation plan.
+- If the user wants a deep critique of the branch approach, implementation plan, or test strategy before mutating git state, use `gh-plan-review`.
+
 ## Core Workflow
 
 1. If you are not already on the intended feature branch, create it immediately before doing other work. Do not continue on `main`, `master`, or another default branch.
 2. Name the branch `<username>/<descriptive-name>`. Do not use `feature/`, `feat/`, or `fix/`. Use the system username when it is clear; otherwise fall back to the agent name.
-3. Complete the requested work and run the smallest relevant verification for the touched files before committing.
-4. Run `git branch --show-current` immediately before every commit, even if you already checked it earlier in the task.
-5. Write a commit message that matches the repository history and include a body. When the local style is unclear, use a conventional commit.
-6. If the work closes an issue completely, include `Closes #xx` or `Fixes #xx` in the commit body. If the work is partial, include `Part of #xx`.
-7. If the repo uses Changesets, add the smallest accurate changeset before pushing.
-8. Follow the repo and user push policy. If explicit user approval is required before pushing, stop and get it.
-9. Push the feature branch to GitHub.
-10. Create the PR with `gh pr create --fill` when the commit title and body are already clean. If you need to set or repair the PR body manually, pass actual multiline text, not literal `\n` escape sequences.
-11. Report the branch name, commit SHA, changeset status, and PR URL.
+3. Inspect `git status --short`, the current diff, and existing repo conventions before committing so the PR describes the actual work rather than a stale summary.
+4. Complete the requested work and run the smallest relevant verification for the touched files before committing.
+5. Run `git branch --show-current` immediately before every commit, even if you already checked it earlier in the task.
+6. Write a commit message that matches the repository history and include a body. When the local style is unclear, use a conventional commit.
+7. If the work closes an issue completely, include `Closes #xx` or `Fixes #xx` in the commit body. If the work is partial, include `Part of #xx`.
+8. If the repo uses Changesets, add the smallest accurate changeset before pushing.
+9. Follow the repo and user push policy. If explicit user approval is required before pushing, stop and get it.
+10. Push the feature branch to GitHub.
+11. Create the PR with `gh pr create --fill` when the commit title and body are already clean. If you need to set or repair the PR body manually, pass actual multiline text, not literal `\n` escape sequences.
+12. Report the branch name, commit SHA, changeset status, and PR URL.
 
 ## Branch Rules
 
@@ -45,6 +51,7 @@ Use this skill when the user wants the current work packaged into a reviewable G
 
 GitHub CLI commands that require network access should be run outside the sandbox immediately, using approved `gh` prefix rules when available, instead of trying them in-sandbox first.
 
+- Treat the current branch, local diff, and existing open PR state as authoritative when deciding whether to create a new PR or update an existing one.
 - Never push without explicit user approval when repo or user policy requires approval.
 - Push only the feature branch you are preparing for review.
 - Use `gh pr create --fill` so the PR title and body inherit from the commit when that matches the repo workflow.

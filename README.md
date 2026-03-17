@@ -5,6 +5,7 @@ Reusable agent skills published from `beeman/skills`.
 ## Available Skills
 
 - `gh-issue-kickoff`: Start work on a GitHub issue with a readiness gate and execution-ready plan.
+- `gh-plan-review`: Review and pressure-test a GitHub issue, PR, or branch implementation plan before coding.
 - `gh-pr-create`: Prepare local changes for review by creating a branch, committing cleanly, pushing, and opening a GitHub PR.
 - `gh-pr-rebase`: Rebase a PR branch onto the latest default-branch history and resolve conflicts safely.
 - `gh-pr-review-comments`: Handle GitHub PR review comments on an existing feature branch.
@@ -27,6 +28,7 @@ Install a single skill instead of everything in the repository:
 
 ```bash
 npx skills add -g beeman/skills --skill gh-issue-kickoff
+npx skills add -g beeman/skills --skill gh-plan-review
 npx skills add -g beeman/skills --skill gh-pr-create
 npx skills add -g beeman/skills --skill gh-pr-rebase
 npx skills add -g beeman/skills --skill gh-pr-review-comments
@@ -48,6 +50,7 @@ Remove a specific skill:
 
 ```bash
 npx skills remove -g gh-issue-kickoff
+npx skills remove -g gh-plan-review
 npx skills remove -g gh-pr-create
 npx skills remove -g gh-pr-rebase
 npx skills remove -g gh-pr-review-comments
@@ -72,3 +75,7 @@ Update installed skills:
 ```bash
 npx skills update
 ```
+
+## Credits
+
+The review structure for `gh-plan-review` and parts of the GitHub planning workflow in this repo were informed by [garrytan/gstack](https://github.com/garrytan/gstack), especially the [`plan-eng-review`](https://github.com/garrytan/gstack/blob/main/plan-eng-review/SKILL.md) and [`plan-design-review`](https://github.com/garrytan/gstack/blob/main/plan-design-review/SKILL.md) skills.
