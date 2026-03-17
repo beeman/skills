@@ -1,6 +1,6 @@
 ---
 name: gh-issue-kickoff
-description: Kick off work on a GitHub issue with gh. Use when Codex needs to start working an issue by inspecting the live issue and local codebase, checking whether the issue is materially ready, applying only safe issue improvements, escalating real blockers or stale or incoherent requirements, and producing an execution-ready implementation plan.
+description: Kick off work on a GitHub issue with gh. Use when Codex needs to start from the authoritative issue state and local codebase, fix only material issue gaps, and produce the first execution-ready implementation plan. For a deeper critique or tradeoff review of an existing plan, use `gh-plan-review`.
 ---
 
 # Kick Off Issue Work
@@ -11,18 +11,27 @@ Use this skill to start work on a GitHub issue from live GitHub data and current
 
 Assume the issue is probably good enough to start from. Only stop or escalate when you find a material blocker, contradiction, stale detail, or planning-critical omission that would make execution unsafe or incoherent.
 
+Keep kickoff focused on the first executable plan. If the user wants a deep critique, tradeoff review, or pressure test of an existing issue, PR, or branch plan, use `gh-plan-review` instead of widening this skill into a broader review pass.
+
+## Boundary Rules
+
+- Use this skill to start from a GitHub issue and turn it into the first execution-ready plan.
+- Use `gh-plan-review` when the user wants a deeper review of an existing implementation plan, branch approach, or test strategy before coding.
+- Do not silently widen kickoff into a report-only plan audit. Keep the work centered on issue readiness, safe issue hygiene, and the first actionable plan.
+
 ## Core Workflow
 
 1. Fetch the authoritative issue state with `gh issue view {<number> | <url>} --json assignees,author,body,comments,labels,milestone,number,projectItems,state,title,updatedAt,url`.
-2. Read the title, body, comments, labels, and update timing before making assumptions about the issue's quality.
-3. Inspect the relevant local codebase, current architecture, and nearby docs so the plan reflects reality instead of issue wording alone.
-4. Build the implementation approach while checking whether the issue is materially ready to execute.
-5. Classify the issue as `ready`, `ready-with-minor-fixes`, `needs-clarification`, or `blocked`.
-6. Apply only safe `gh issue edit` changes when the fix is factual, non-controversial, and does not change product intent.
-7. Use `gh issue comment` when the issue should not be edited directly but a concise clarification request or planning note would help stakeholders unblock the work.
-8. Escalate to stakeholders only when missing or conflicting information materially changes the implementation plan or makes execution unsafe.
-9. Produce the implementation plan, issue findings, any issue updates, any stakeholder follow-up, and the next execution step.
-10. End with the required status line.
+2. Treat the live issue state as authoritative over pasted summaries, stale notes, or memory.
+3. Read the title, body, comments, labels, and update timing before making assumptions about the issue's quality.
+4. Inspect the relevant local codebase, current architecture, and nearby docs so the plan reflects reality instead of issue wording alone.
+5. Build the implementation approach while checking whether the issue is materially ready to execute and keeping the plan minimal-diff.
+6. Classify the issue as `ready`, `ready-with-minor-fixes`, `needs-clarification`, or `blocked`.
+7. Apply only safe `gh issue edit` changes when the fix is factual, non-controversial, and does not change product intent.
+8. Use `gh issue comment` when the issue should not be edited directly but a concise clarification request or planning note would help stakeholders unblock the work.
+9. Escalate to stakeholders only when missing or conflicting information materially changes the implementation plan or makes execution unsafe.
+10. Produce the implementation plan, issue findings, any issue updates, any stakeholder follow-up, and the next execution step.
+11. End with the required status line.
 
 ## Material Readiness Rules
 

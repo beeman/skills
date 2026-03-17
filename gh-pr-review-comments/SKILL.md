@@ -7,6 +7,11 @@ description: Address GitHub pull request review comments on an existing feature 
 
 Use this skill to run a full GitHub PR review follow-up pass from live comment data instead of screenshots or pasted summaries. Fetch the comments, decide what to accept, update only the current PR branch, resolve threads deliberately, and finish with the exact status line the user expects.
 
+## Boundary Rules
+
+- This skill addresses existing review comments on the current PR branch. It does not run a fresh end-to-end critique of the implementation plan.
+- If the user wants a broader challenge of the plan, branch approach, or test strategy beyond the current review comments, use `gh-plan-review`.
+
 ## Core Workflow
 
 1. Confirm you are already on the PR feature branch you intend to update, not `main`, `master`, or another default branch.

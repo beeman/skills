@@ -9,6 +9,11 @@ description: Rebase an existing GitHub PR branch onto the repository default bra
 
 Use this skill when the user wants the current PR branch refreshed on top of the latest default-branch history instead of merged. Keep the existing feature branch safe, keep the local default branch current when that can be done without rewriting local-only work, and escalate only the conflicts that need human judgment.
 
+## Boundary Rules
+
+- This skill refreshes branch history. It does not review whether the branch plan or test strategy is the right one.
+- If the user wants to challenge the implementation direction before rewriting history or pushing a rebased branch, use `gh-plan-review`.
+
 ## Core Workflow
 
 1. Confirm you are on the feature branch that should be rebased, not `main`, `master`, or another default branch, and not a detached `HEAD`. If you are on the wrong branch, switch to the intended PR branch or ask instead of rebasing from the wrong starting point.

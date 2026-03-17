@@ -1,4 +1,4 @@
 interface:
   display_name: "Kick Off Issue Work"
   short_description: "Start work on a GitHub issue"
-  default_prompt: "Use $gh-issue-kickoff to start work on this GitHub issue, fix any material issue gaps, and produce an execution-ready implementation plan."
+  default_prompt: "Use $gh-issue-kickoff to start from this GitHub issue, fix any material issue gaps, and produce the first execution-ready implementation plan."
