@@ -1,0 +1,4 @@
+interface:
+  default_prompt: "Use $adb-app-cleanup to ask whether I want to review native or dev apps, list the matching Android packages on the connected device, number them, and confirm removals before uninstalling anything."
+  display_name: "ADB App Cleanup"
+  short_description: "Review and remove Android app packages"
