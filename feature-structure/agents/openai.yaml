@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feature Structure"
+  short_description: "Refactor or create repo features"
+  default_prompt: "Use $feature-structure to refactor code into a feature-based structure or create a new feature by inferring the repo conventions, showing a concrete proposal, and waiting for confirmation before edits."
