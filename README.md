@@ -6,7 +6,7 @@ Reusable agent skills published from `beeman/skills`.
 
 - `gh-issue-kickoff`: Start work on a GitHub issue with a readiness gate and execution-ready plan.
 - `gh-plan-review`: Review and pressure-test a GitHub issue, PR, or branch implementation plan before coding.
-- `gh-pr-create`: Prepare local changes for review by creating a branch, committing cleanly, pushing, and opening a GitHub PR.
+- `gh-pr-create`: Prepare local changes for review by creating a branch, committing cleanly, previewing the exact PR title and body, pushing, and requiring explicit confirmation before opening a GitHub PR.
 - `gh-pr-rebase`: Rebase a PR branch onto the latest default-branch history and resolve conflicts safely.
 - `gh-pr-review-comments`: Handle GitHub PR review comments on an existing feature branch.
 

@@ -1,6 +1,6 @@
 ---
 name: gh-pr-review-comments
-description: Address GitHub pull request review comments on an existing feature branch. Use when Codex needs to fetch live PR review comments with gh, classify each comment as actionable, optional, or rejectable, apply only accepted fixes on the same branch, keep a single-commit PR flow with git commit --amend and git push --force-with-lease, resolve review threads with explicit rationale, re-request relevant human reviewers and configured review bots, and report the result in the exact status line format.
+description: Address GitHub pull request review comments on an existing feature branch. Use when Codex needs to fetch live PR review comments with gh, classify each comment as actionable, optional, or rejectable, apply only accepted fixes on the same branch, run a self-review pass for contradictions introduced by those fixes, keep a single-commit PR flow with git commit --amend and git push --force-with-lease, resolve review threads with explicit rationale, re-request relevant human reviewers and configured review bots, and report the result in the exact status line format.
 ---
 
 # Address PR Review Comments
@@ -21,11 +21,14 @@ Use this skill to run a full GitHub PR review follow-up pass from live comment d
 5. Inspect the relevant files, diff, and surrounding context for accepted comments.
 6. Apply only the accepted fixes on the same PR branch.
 7. Run the smallest relevant verification for the touched code.
-8. Amend the existing PR commit with `git commit --amend --no-edit` if code changed.
-9. If a new commit was created, get any required user or repo-policy approval for pushing, then push the feature branch with `git push --force-with-lease`.
-10. Post a short reply on every handled review thread describing the action taken, then resolve it intentionally.
-11. After resolving handled threads, re-request review from each relevant human reviewer and supported review bot unless the user says not to.
-12. Report the result in the required status format.
+8. Before amending or pushing, re-read the affected workflow, file, or ruleset end-to-end and do a self-review for contradictions, path-specific regressions, or metadata mismatches introduced by the accepted fixes.
+9. If that self-review introduces additional edits, run the smallest relevant verification again for the final diff.
+10. Amend the existing PR commit. Use `git commit --amend --no-edit` only when the existing commit message still accurately describes the updated branch diff; otherwise amend the commit message so it matches the current branch diff.
+11. If a new commit was created, get any required user or repo-policy approval for pushing, then push the feature branch with `git push --force-with-lease`.
+12. If the open PR title or body is now stale relative to the current branch diff, update the PR metadata before re-requesting review.
+13. Post a short reply on every handled review thread describing the action taken, then resolve it intentionally.
+14. After resolving handled threads, re-request review from each relevant human reviewer and supported review bot unless the user says not to.
+15. Report the result in the required status format.
 
 ## Triage Rules
 
@@ -50,6 +53,16 @@ GitHub CLI commands that require network access should be run outside the sandbo
 - Decline scope expansion unless the user explicitly asks for it.
 - Avoid cosmetic churn when a comment is optional or invalid.
 - If no comments are accepted, do not manufacture code changes just to appear responsive.
+- If accepted fixes materially change the branch summary, refresh the commit message and open PR title/body so they still describe the current diff before re-requesting review. When refreshing an open PR body, preserve any applicable `Closes #xx`, `Fixes #xx`, or `Part of #xx` trailer and any required template sections that still accurately describe the current diff.
+- If the self-review pass adds or changes files, rerun the smallest relevant verification on the final diff before amending and pushing.
+
+## Self-Review Rules
+
+- After applying accepted fixes and before re-requesting review, run a short adversarial self-review of the affected workflow or file, not just the touched hunk.
+- Check whether the new wording or code creates contradictions with other paths, especially distinctions like single-commit versus multi-commit, new PR versus existing PR, commit metadata versus PR metadata, and default base versus configured base.
+- If the accepted fix changes what text, behavior, or command will actually be sent or executed, verify that any preview, confirmation, or metadata rule still matches that actual behavior.
+- Fix any material contradiction you can justify from local context before pushing and re-requesting review, including stale commit or PR metadata when the branch summary has changed.
+- If fixing that contradiction changes the diff, rerun the smallest relevant verification before you amend and push.
 
 ## Thread Resolution Rules
 
@@ -83,6 +96,8 @@ git push --force-with-lease
 ```
 
 If the repo or user policy requires approval before pushing, obtain that approval first. Once pushing is allowed, use `git push --force-with-lease` for the PR feature branch update.
+
+When the self-review pass finds that the current commit message is stale, amend the commit with an updated message instead of using `--no-edit`. When the open PR title or body is stale, update the PR metadata before re-requesting review, preserving any applicable issue trailer or required template section that still matches the current diff instead of blindly replacing the body.
 
 Re-request review when the pass is complete by requesting each relevant human reviewer again and by posting one standalone PR comment per relevant bot, using the exact summon text from [references/review-bots.md](references/review-bots.md).
 
