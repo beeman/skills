@@ -7,20 +7,25 @@ Use these examples only for structural guidance. They are intentionally generic 
 ```text
 apps/web/src/features/todo/
 ├── data-access/
-│   ├── use-todo-query-list.ts
-│   └── use-todo-mutation-create.ts
-├── todo-feature-detail.tsx
+│   ├── use-todo-create.ts
+│   ├── use-todo-list-query.ts
+│   └── use-todo-organizations-query.ts
 ├── todo-feature-index.tsx
+├── todo-feature-manage.tsx
+├── todo-feature-select-context.tsx
 └── ui/
-    ├── todo-ui-card.tsx
-    └── todo-ui-list.tsx
+    ├── todo-ui-create-form.tsx
+    ├── todo-ui-list.tsx
+    ├── todo-ui-loading.tsx
+    └── todo-ui-shell.tsx
 ```
 
 Use this when the app owns both routing and rendering for the feature.
 
-- `todo-feature-*` files are the smart layer. They read route params, call `data-access`, and pass data or callbacks into `ui`.
-- `ui/*` files are the presentational layer. They render props and callbacks instead of owning fetching or route parsing.
-- `data-access/*` files own query hooks, mutation hooks, adapters, or persistence code.
+- `data-access/*` files own query hooks, mutation hooks, adapters, or persistence code. Prefer one exported thing per file.
+- `todo-feature-index.tsx` acts as the parent entry feature. It composes child features instead of centralizing every branch in one file.
+- `todo-feature-manage.tsx` and `todo-feature-select-context.tsx` act as child features for dependent and prerequisite phases.
+- `ui/*` files are the presentational layer. They render props and callbacks instead of owning fetching or route parsing, and they stay granular rather than collapsing into one screen component.
 
 ## Backend Feature Module
 
@@ -41,11 +46,10 @@ Treat `feature/` as the smart layer on the backend too. Keep adapters and integr
 app/todos/page.tsx
 app/todos/[id]/page.tsx
 src/features/todo/
-├── todo-feature-detail.tsx
 └── todo-feature-index.tsx
 ```
 
-Prefer route files that stay thin and import the real feature implementation.
+Prefer route files that stay thin and import the real feature implementation. Keep workflow composition inside `feature`.
 
 ## Package-Per-Feature Monorepo
 
