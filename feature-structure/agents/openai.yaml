@@ -1,4 +1,4 @@
 interface:
+  default_prompt: "Use $feature-structure to propose a composition-first feature structure with parent gating, split data-access hooks, thin routes, and granular UI leaves."
   display_name: "Feature Structure"
-  short_description: "Refactor or create composition-first features"
-  default_prompt: "Use $feature-structure to refactor code into a composition-first feature structure or create a new feature by inferring the repo conventions, proposing parent and child feature boundaries plus thin route wiring, and waiting for confirmation before edits."
+  short_description: "Refactor or create real composition-first features"

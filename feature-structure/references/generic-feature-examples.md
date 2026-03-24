@@ -8,24 +8,31 @@ Use these examples only for structural guidance. They are intentionally generic 
 apps/web/src/features/todo/
 ├── data-access/
 │   ├── use-todo-create.ts
+│   ├── use-todo-delete.ts
 │   ├── use-todo-list-query.ts
-│   └── use-todo-organizations-query.ts
+│   ├── use-todo-organizations-query.ts
+│   ├── use-todo-set-active-organization.ts
+│   └── use-todo-toggle.ts
 ├── todo-feature-index.tsx
 ├── todo-feature-manage.tsx
-├── todo-feature-select-context.tsx
+├── todo-feature-select-organization.tsx
 └── ui/
     ├── todo-ui-create-form.tsx
+    ├── todo-ui-list-item.tsx
     ├── todo-ui-list.tsx
     ├── todo-ui-loading.tsx
-    └── todo-ui-shell.tsx
+    ├── todo-ui-organization-select.tsx
+    ├── todo-ui-shell.tsx
+    └── todo-ui-status-message.tsx
 ```
 
 Use this when the app owns both routing and rendering for the feature.
 
-- `data-access/*` files own query hooks, mutation hooks, adapters, or persistence code. Prefer one exported thing per file.
-- `todo-feature-index.tsx` acts as the parent entry feature. It composes child features instead of centralizing every branch in one file.
-- `todo-feature-manage.tsx` and `todo-feature-select-context.tsx` act as child features for dependent and prerequisite phases.
-- `ui/*` files are the presentational layer. They render props and callbacks instead of owning fetching or route parsing, and they stay granular rather than collapsing into one screen component.
+- `data-access/*` files own query hooks, mutation hooks, adapters, or persistence code. Prefer one exported thing per file, one query or mutation per hook, and hook-owned invalidation and error handling.
+- `todo-feature-index.tsx` acts as the parent entry feature. It checks prerequisites, branches early, and mounts `todo-feature-manage.tsx` only when the dependent workflow is ready.
+- `todo-feature-select-organization.tsx` acts as the prerequisite child feature. The parent passes only the minimal handoff contract, such as available organizations plus an imperative `setActiveOrganization` action.
+- `ui/*` files are the presentational layer. Ephemeral draft state lives in `todo-ui-create-form.tsx`, which clears after awaited success instead of moving that field state into `feature`.
+- `ui/*` stays granular. `todo-ui-list-item.tsx`, `todo-ui-list.tsx`, `todo-ui-loading.tsx`, `todo-ui-organization-select.tsx`, `todo-ui-shell.tsx`, and `todo-ui-status-message.tsx` act as leaf UI pieces instead of collapsing back into one large manage screen.
 
 ## Backend Feature Module
 

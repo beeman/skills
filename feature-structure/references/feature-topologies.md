@@ -2,6 +2,18 @@
 
 Use these patterns to choose a structure that matches the repository. Prefer repository evidence over these examples.
 
+## Table of Contents
+
+- [Choose by Repository Signal](#choose-by-repository-signal)
+- [Common Library Types](#common-library-types)
+- [Import Boundaries](#import-boundaries)
+- [App-Local Feature Folders](#app-local-feature-folders)
+- [Backend Feature Modules](#backend-feature-modules)
+- [Package-Per-Feature](#package-per-feature)
+- [Split-Platform UI Packages](#split-platform-ui-packages)
+- [Thin Filesystem Routes](#thin-filesystem-routes)
+- [Selection Rules](#selection-rules)
+
 ## Choose by Repository Signal
 
 1. Use an app-local feature folder when the repo already groups product code under a single app, such as `apps/web/src/features` or `src/features`.
@@ -39,17 +51,10 @@ Use this when one app owns the feature and the repo already keeps feature code i
 ```text
 src/features/todo/
 ├── data-access/
-│   ├── use-todo-create.ts
-│   ├── use-todo-list-query.ts
-│   └── use-todo-organizations-query.ts
 ├── todo-feature-index.tsx
 ├── todo-feature-manage.tsx
-├── todo-feature-select-context.tsx
+├── todo-feature-select-organization.tsx
 └── ui/
-    ├── todo-ui-create-form.tsx
-    ├── todo-ui-list.tsx
-    ├── todo-ui-loading.tsx
-    └── todo-ui-shell.tsx
 ```
 
 Prefer this when:
@@ -58,7 +63,7 @@ Prefer this when:
 - routes or screens import feature files directly
 - shared UI lives elsewhere but feature UI is local
 
-Treat `{feature}-feature-*` files as the smart layer and `ui/` as the presentational layer. Let the parent entry feature compose child features when prerequisites or workflow phases are distinct. Add `util/` only when the feature truly needs pure helpers that do not belong in `data-access`, `feature`, or `ui`.
+Treat `{feature}-feature-*` files as the smart layer and `ui/` as the presentational layer. Let the parent entry feature compose child features when prerequisites or workflow phases are distinct. Add `util/` only when the feature truly needs pure helpers that do not belong in `data-access`, `feature`, or `ui`. For a detailed app-local tree with split hooks and granular UI leaves, read [generic-feature-examples.md](generic-feature-examples.md).
 
 ## Backend Feature Modules
 
@@ -125,17 +130,14 @@ Use this when the framework uses file-based routing and route files should stay 
 app/todos/page.tsx
 app/todos/[id]/page.tsx
 src/features/todo/
-├── todo-feature-index.tsx
-├── todo-feature-manage.tsx
-├── todo-feature-select-context.tsx
-└── ui/
+└── todo-feature-index.tsx
 ```
 
-Prefer route files that only import the actual feature entry file and pass through the framework-specific parameters. Keep prerequisite handling and dependent workflow gating inside `feature`, not in the filesystem route.
+Prefer route files that only import the actual feature entry file and pass through the framework-specific parameters. Keep prerequisite handling and dependent workflow gating inside `feature`, not in the filesystem route. Read [generic-feature-examples.md](generic-feature-examples.md) for the detailed feature-internal shape.
 
 ## Selection Rules
 
-- Follow the nearest existing feature if the repo already solved the same problem elsewhere.
+- Follow the nearest existing feature for naming, wiring, and boundary conventions when the repo already solved the same problem elsewhere. If that example is weak or monolithic, preserve the topology signal but strengthen the composition shape.
 - If two patterns exist, choose the one closest to the target app, package, or runtime.
 - If the repo is inconsistent, say so in the proposal and recommend the smallest coherent option instead of pretending the structure is settled.
 - If the workflow has distinct prerequisites or phases, prefer child features over a single large feature file with branching state.
