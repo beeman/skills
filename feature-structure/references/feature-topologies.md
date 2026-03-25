@@ -51,9 +51,9 @@ Use this when one app owns the feature and the repo already keeps feature code i
 ```text
 src/features/todo/
 ├── data-access/
-├── todo-feature-index.tsx
-├── todo-feature-manage.tsx
-├── todo-feature-select-organization.tsx
+├── todo-feature-active-organization.tsx
+├── todo-feature-entry.tsx
+├── todo-feature-organization-selection.tsx
 └── ui/
 ```
 
@@ -63,7 +63,7 @@ Prefer this when:
 - routes or screens import feature files directly
 - shared UI lives elsewhere but feature UI is local
 
-Treat `{feature}-feature-*` files as the smart layer and `ui/` as the presentational layer. Let the parent entry feature compose child features when prerequisites or workflow phases are distinct. Add `util/` only when the feature truly needs pure helpers that do not belong in `data-access`, `feature`, or `ui`. For a detailed app-local tree with split hooks and granular UI leaves, read [generic-feature-examples.md](generic-feature-examples.md).
+Treat `{feature}-feature-*` files as the smart layer and `ui/` as the presentational layer. Name feature files by workflow responsibility or phase, such as `todo-feature-active-organization.tsx` and `todo-feature-entry.tsx`, instead of placeholders such as `*-feature-index` or `*-feature-manage` unless the repository already standardizes them. Leaf `ui` files may use concrete presentational nouns such as `todo-ui-list.tsx` and `todo-ui-list-item.tsx`. Let the parent entry feature compose child features when prerequisites or workflow phases are distinct. Add `util/` only when the feature truly needs pure helpers that do not belong in `data-access`, `feature`, or `ui`. For a detailed app-local tree with split hooks and granular UI leaves, read [generic-feature-examples.md](generic-feature-examples.md).
 
 ## Backend Feature Modules
 
@@ -83,6 +83,7 @@ Prefer this when:
 - `ui` would be the wrong abstraction name for the code being added
 
 Keep the same four-type model on the backend. Put side-effectful integration work in `data-access`, orchestration in `feature`, and pure helpers in `util` only when needed.
+The `index.ts` example here is a real module entrypoint, not a default name for a feature implementation file.
 
 ## Package-Per-Feature
 
@@ -130,10 +131,10 @@ Use this when the framework uses file-based routing and route files should stay 
 app/todos/page.tsx
 app/todos/[id]/page.tsx
 src/features/todo/
-└── todo-feature-index.tsx
+└── todo-feature-entry.tsx
 ```
 
-Prefer route files that only import the actual feature entry file and pass through the framework-specific parameters. Keep prerequisite handling and dependent workflow gating inside `feature`, not in the filesystem route. Read [generic-feature-examples.md](generic-feature-examples.md) for the detailed feature-internal shape.
+Prefer route files that only import the actual feature entry file and pass through the framework-specific parameters. Keep prerequisite handling and dependent workflow gating inside `feature`, not in the filesystem route. The feature entry file should still be named by responsibility, such as `todo-feature-entry.tsx`, rather than a placeholder such as `todo-feature-index.tsx`. Read [generic-feature-examples.md](generic-feature-examples.md) for the detailed feature-internal shape.
 
 ## Selection Rules
 
