@@ -44,6 +44,7 @@ Include:
 - which feature owns gating and which child feature is conditionally mounted
 - how dependent features are gated until prerequisites are satisfied
 - the minimum state or props handed from parent features to child features
+- the chosen feature file names and the workflow responsibility each name represents
 - which file acts as the parent entry feature and which files act as child features
 
 ### Data-Access Contract
@@ -56,6 +57,7 @@ Include:
 - where mutation error handling, invalidation, and side effects live
 - which hooks or modules will exist and which single responsibility each one owns
 - which imperative domain actions the feature or hooks will expose
+- why query hook file names or exported identifiers are named as queries instead of transport verbs such as `get-*`, or why an existing transport-style name must stay
 - why aggregate management hooks are avoided or, if retained, why they are required
 
 ### Layering and Imports
@@ -77,6 +79,7 @@ Include:
 
 - how the UI reacts to async success without empty catch wrappers
 - where ephemeral form or input state lives
+- which leaf UI file names you will use and why those names match presentational responsibilities
 - which UI responsibilities stay in leaf components versus `feature`
 - whether any large screen component will be broken into smaller leaves
 
@@ -132,8 +135,10 @@ If this structure looks right, confirm and I will apply it. If not, tell me what
 
 - Do not hide business-logic guesses inside file names or placeholders.
 - Keep the proposal concrete enough that the user can approve or redirect it without rereading the repository.
-- Keep the proposal explicit about data-access hook granularity, imperative action names, and UI-local ephemeral state.
+- Keep the proposal explicit about data-access hook granularity, imperative action names, query-versus-transport hook naming, and UI-local ephemeral state.
+- Keep the proposal explicit about why feature file names, leaf UI file names, and hook file names or exported identifiers match their responsibilities.
 - Keep the proposal explicit about parent and child feature boundaries instead of describing the result as one smart feature plus one screen.
+- If you retain generic or repository-native placeholder names, say explicitly that the repository already standardized them and why this change is preserving them.
 - Treat weak local examples as naming or wiring references, not proof that a monolithic structure is acceptable.
 - Prefer early-return composition language over describing long `else if` chains as the intended outcome.
 - Separate confirmed facts from assumptions.

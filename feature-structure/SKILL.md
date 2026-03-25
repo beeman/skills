@@ -7,7 +7,7 @@ name: feature-structure
 
 ## Overview
 
-Use this skill to reorganize code around features or scaffold a new feature without embedding business logic. Treat a feature as a composition boundary, not just a place to move one large smart component. Infer the local pattern first, preserve local naming and wiring, and keep changes minimal-diff unless the user asks for broader restructuring. Do not treat a weak nearby monolith as proof that the right answer is one big state hook plus one big screen in a new folder.
+Use this skill to reorganize code around features or scaffold a new feature without embedding business logic. Treat a feature as a composition boundary, not just a place to move one large smart component. Infer the local pattern first, preserve established repository naming and wiring when they already exist, and keep changes minimal-diff unless the user asks for broader restructuring. Do not treat a weak nearby monolith as proof that the right answer is one big state hook plus one big screen in a new folder.
 
 ## Layer Roles and Import Boundaries
 
@@ -27,19 +27,25 @@ When normalizing or creating a feature-based structure, prefer at most four libr
 - Prefer early-return composition over `let content` accumulation or long `else if` chains in `feature` files. If a feature starts accumulating many branches, treat that as a signal to split the workflow across feature boundaries.
 - Prefer local interfaces and types inside each file. Avoid shared exported type modules unless multiple files genuinely need the same domain shape.
 
+## Naming Defaults
+
+- `data-access`: name hook files after one query or one mutation. Prefer file names such as `use-todo-create.ts`, `use-todo-delete.ts`, `use-todo-list-query.ts`, `use-todo-organizations-query.ts`, `use-todo-set-active-organization.ts`, and `use-todo-toggle.ts`. When naming exported identifiers, prefer valid forms such as `useTodoCreate`, `useTodoDelete`, `useTodoListQuery`, `useTodoOrganizationsQuery`, `useTodoSetActiveOrganization`, and `useTodoToggle`. Use query-shaped names for reads and imperative domain actions for mutations. Reject transport or placeholder names such as `use-todo-fetch-data.ts`, `use-todo-get-all.ts`, `use-todo-handle-submit.ts`, `useTodoFetchData`, `useTodoGetAll`, and `useTodoHandleSubmit` unless the repository already standardizes them and the proposal says why they stay.
+- `feature` or `feature-<app>`: name files by workflow responsibility or phase. Prefer names such as `todo-feature-active-organization.tsx`, `todo-feature-entry.tsx`, and `todo-feature-organization-selection.tsx`. Reject placeholder defaults such as `*-feature-index`, `*-feature-manage`, `*-screen`, `*-view`, and `*-wrapper` unless the repository already standardizes them and the proposal says why they stay.
+- `ui` or `ui-<app>`: name files by the concrete presentational unit they render. Prefer names such as `todo-ui-create-form.tsx`, `todo-ui-list.tsx`, `todo-ui-list-item.tsx`, `todo-ui-loading.tsx`, `todo-ui-organization-select.tsx`, `todo-ui-shell.tsx`, and `todo-ui-status-message.tsx`. These are valid because they describe leaf UI responsibilities, not orchestration placeholders.
+
 ## Data-Access Defaults
 
 - If the caller needs success or failure to drive UI behavior, return a useful result from the async contract instead of forcing the UI to swallow errors.
 - Mutation hooks should expose awaited contracts such as `mutateAsync` when follow-up behavior depends on success.
 - Prefer one query or one mutation per data-access hook. Reject aggregate hooks such as `useTodoManagement` or `useTodoOrganizationState` unless the repository already has a deliberate contract the user asked to preserve.
-- Prefer small domain-specific hook names that describe the action or query directly.
+- Prefer small domain-specific hook file names and exported identifiers that describe one action or one query directly. Use query-shaped names for reads and imperative domain verbs for mutations unless the repository already standardizes a different pattern.
 
 ## UI Defaults
 
 - Do not use empty `catch(() => {})` wrappers in UI. If the UI needs to react to success, design the async contract to return enough information.
 - Keep ephemeral draft, filter, or input state in the leaf UI component by default. Do not lift it into `feature` just to clear it after success.
 - Let the UI clear local state after an awaited success from a feature or data-access action.
-- Prefer small leaf components such as create forms, list items, lists, loading states, selectors, shells, and status messages over one generic `*-manage` screen that still owns most rendering.
+- Prefer small leaf components such as create forms, list items, lists, loading states, selectors, shells, and status messages over one generic `*-manage` screen that still owns most rendering. Names such as `todo-ui-list.tsx` and `todo-ui-list-item.tsx` are good because they describe concrete presentational units.
 
 ## Anti-Patterns to Reject
 
@@ -82,7 +88,7 @@ When normalizing or creating a feature-based structure, prefer at most four libr
 - Keep behavior unchanged during refactors unless the user asks to change it.
 - Keep related code colocated so a future change does not require jumping across unrelated directories.
 - Keep shared exported types local unless multiple files genuinely need the same domain shape.
-- Preserve local naming, imports, path aliases, route wiring, and workspace boundaries, but strengthen the composition shape when the nearest example is weak or monolithic.
+- Preserve established repository naming, imports, path aliases, route wiring, and workspace boundaries when they already exist, but do not introduce new placeholder names just because the nearest example is weak or monolithic.
 - Preserve public imports, path aliases, and naming conventions when possible. If a move forces updates, change all affected call sites in the same edit set.
 - Prefer one query or mutation per data-access hook over introducing a new aggregate management hook.
 - Run the smallest relevant verification after editing and state what you did not verify.
@@ -111,5 +117,5 @@ When normalizing or creating a feature-based structure, prefer at most four libr
 ## Reference Files
 
 - Read [references/feature-topologies.md](references/feature-topologies.md) to compare supported layouts and choose one.
-- Read [references/generic-feature-examples.md](references/generic-feature-examples.md) when you need sanitized naming or tree examples.
+- Read [references/generic-feature-examples.md](references/generic-feature-examples.md) when you need responsibility-clear tree examples.
 - Read [references/proposal-contract.md](references/proposal-contract.md) immediately before presenting the pre-edit proposal.
