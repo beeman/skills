@@ -1,17 +1,18 @@
 ---
 name: gh-plan-review
-description: Review, challenge, pressure-test, or refine an implementation plan tied to a GitHub issue, GitHub PR, or active branch. Use when Codex needs to inspect the authoritative GitHub state and local repo context, run a scope challenge, identify material plan risks, surface real tradeoffs, and finish with a fixed review summary before any code edits.
+description: Review, challenge, pressure-test, or refine an implementation plan tied to a GitHub issue, GitHub PR, or active branch. Use when Codex needs to inspect the authoritative GitHub state and local repo context, run a scope challenge, identify material plan risks, surface real tradeoffs, and finish with a fixed review summary without mutating code or git state.
 ---
 
 # Review GitHub Plan
 
-Use this skill when the user wants a deep review of an implementation plan before coding or before broadening an in-flight issue, PR, or branch. This skill is report-only: inspect, challenge, and summarize, but do not edit code, GitHub issues, TODO files, or branch state.
+Use this skill when the user wants a deep review of an implementation plan before coding or before broadening an in-flight issue, PR, or branch. This skill is report-only: inspect, challenge, and summarize, but do not edit code, GitHub issues, TODO files, or branch state. Do not commit, amend, push, rebase, or hand off to mutation skills without a separate user request.
 
 ## Boundary Rules
 
 - Use `gh-issue-kickoff` when the user wants to start from an issue and produce the first execution-ready plan.
 - Use this skill when the user wants to review, challenge, pressure-test, or refine an existing implementation plan, test strategy, or branch approach.
 - Do not widen this skill into execution, issue cleanup, or git mutation work. If the user switches to implementation, hand off to the appropriate execution skill.
+- Do not invoke `gh-commit`, `gh-pr-create`, `gh-pr-rebase`, or `gh-pr-review-comments` from this skill unless the user makes a separate follow-up request for mutation work.
 
 ## Core Workflow
 

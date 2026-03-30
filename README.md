@@ -4,12 +4,12 @@ Reusable agent skills published from `beeman/skills`.
 
 ## Available Skills
 
-- `gh-commit`: Prepare or amend a clean local commit without pushing or opening a PR.
+- `gh-commit`: Prepare a clean local commit and ask before rewriting history on non-default multi-commit branches.
 - `gh-issue-kickoff`: Start work on a GitHub issue with a readiness gate and execution-ready plan.
-- `gh-plan-review`: Review and pressure-test a GitHub issue, PR, or branch implementation plan before coding.
-- `gh-pr-create`: Requires `gh-commit`, then previews the exact PR title and body, pushes, and requires explicit confirmation before opening a GitHub PR.
+- `gh-plan-review`: Review and pressure-test a GitHub issue, PR, or branch implementation plan without mutating git state.
+- `gh-pr-create`: Requires `gh-commit`, previews the exact PR title and body, and handles single-commit and multi-commit PR flows explicitly before opening a GitHub PR.
 - `gh-pr-rebase`: Rebase a PR branch onto the latest default-branch history and resolve conflicts safely.
-- `gh-pr-review-comments`: Handle GitHub PR review comments on an existing feature branch.
+- `gh-pr-review-comments`: Handle GitHub PR review comments and ask before rewriting history on multi-commit PR branches.
 
 ## Use This Repository With `skills`
 
@@ -36,7 +36,7 @@ npx skills add -g beeman/skills --skill gh-pr-rebase
 npx skills add -g beeman/skills --skill gh-pr-review-comments
 ```
 
-`gh-pr-create` requires `gh-commit`. When installing skills individually, install both or `gh-pr-create` will stop and ask how to handle branch and commit preparation before creating the PR.
+`gh-pr-create` requires `gh-commit`. When installing skills individually, install both or `gh-pr-create` will stop and ask how to handle branch and commit packaging, including whether to keep or rewrite multi-commit history, before creating the PR.
 
 Install for specific agents only:
 

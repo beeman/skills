@@ -1,4 +1,4 @@
 interface:
-  default_prompt: "Use $gh-commit to get onto the correct feature branch if needed, inspect the tracked diff, prepare or amend a clean commit with any required changeset, and stop before pushing or opening a PR."
+  default_prompt: "Use $gh-commit to get onto the correct feature branch if needed, inspect the tracked diff and branch history, prepare a clean local commit with any required changeset, ask before rewriting history on non-default multi-commit branches, and stop before pushing or opening a PR."
   display_name: "Commit Changes"
   short_description: "Prepare a clean local Git commit"
