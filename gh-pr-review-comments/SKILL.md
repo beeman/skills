@@ -29,7 +29,7 @@ Use this skill to run a full GitHub PR review follow-up pass from live comment d
 13. If a new commit was created, get any required user or repo-policy approval for pushing, then push the feature branch with `git push`. If history was rewritten, get any required user or repo-policy approval for pushing, then push the feature branch with `git push --force-with-lease`.
 14. If the open PR title or body is now stale relative to the current branch diff, update the PR metadata before re-requesting review.
 15. Post a short reply on every handled review thread describing the action taken, then resolve it intentionally.
-16. After resolving handled threads, re-request review from each relevant human reviewer and supported review bot unless the user says not to.
+16. After resolving handled threads, re-request review from each relevant human reviewer and supported review bot unless the user says not to. If a relevant bot is clearly identified but missing from [references/review-bots.md](references/review-bots.md), mention its username explicitly and ask the user whether to re-request that bot or add it to the registry instead of silently skipping it.
 17. Report the result in the required status format.
 
 ## Triage Rules
@@ -88,7 +88,8 @@ GitHub CLI commands that require network access should be run outside the sandbo
 - If the bot is not obvious from inline review comments, inspect top-level PR comments with `gh api --paginate repos/{owner}/{repo}/issues/{pr}/comments` and prefer bot-authored comments over summon comments.
 - Treat prior PR summon comments as historical context only. Use them only to corroborate explicit user instruction or current-round bot activity, never as the sole reason to re-request bot review.
 - If multiple supported bots participated in the current review round, post one exact summon comment for each of them after pushing the fix.
-- If a human reviewer or supported bot cannot be identified confidently, do not guess. Skip that re-review request unless the user names the reviewer or you can confirm it from PR context.
+- If a bot is clearly identified from PR context but is not listed in [references/review-bots.md](references/review-bots.md), mention the bot username explicitly and ask the user whether to re-request that bot or add it to the registry. Do not invent summon text.
+- If a human reviewer or bot username cannot be identified confidently, do not guess. Skip that re-review request unless the user names the reviewer or you can confirm it from PR context.
 
 ## Git and Review Commands
 
@@ -112,7 +113,7 @@ When the PR branch has multiple branch commits relative to the PR base and the u
 
 When the self-review pass finds that the chosen commit message is stale, update it so it matches the current branch diff instead of blindly reusing old metadata. When the open PR title or body is stale, update the PR metadata before re-requesting review, preserving any applicable issue trailer or required template section that still matches the current diff instead of blindly replacing the body.
 
-Re-request review when the pass is complete by requesting each relevant human reviewer again and by posting one standalone PR comment per relevant bot, using the exact summon text from [references/review-bots.md](references/review-bots.md).
+Re-request review when the pass is complete by requesting each relevant human reviewer again and by posting one standalone PR comment per relevant supported bot, using the exact summon text from [references/review-bots.md](references/review-bots.md). If a relevant bot is clearly identified but missing from that registry, mention its username explicitly and ask the user whether to re-request that bot or add it to the registry; do not invent a summon comment.
 
 If no code changed, skip commit and push. If re-review would be misleading because the task is blocked or incomplete, or no relevant human reviewer or supported bot was identified, report `no` in the final status line.
 
