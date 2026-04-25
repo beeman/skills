@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pin GitHub Actions"
+  short_description: "Pin actions to latest tags and SHAs"
+  default_prompt: "Use $gh-pin-actions to update and pin every GitHub Actions use in this repository."
