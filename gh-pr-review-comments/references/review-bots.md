@@ -5,6 +5,7 @@ Use this reference when you need the exact re-review summon comment or when addi
 | Bot key | Summon comment | Preferred evidence | Fallback evidence |
 | --- | --- | --- | --- |
 | `chatgpt-codex-connector` | `@codex review` | Review comments or top-level PR comments clearly authored by the Codex connector | Explicit user instruction, optionally corroborated by prior `@codex` summon comments |
+| `coderabbitai` | `@coderabbitai review` | Review comments or top-level PR comments clearly authored by CodeRabbit | Explicit user instruction, optionally corroborated by prior `@coderabbitai` summon comments |
 | `gemini-code-assist` | `@gemini-code-assist review` | Review comments or top-level PR comments clearly authored by Gemini | Explicit user instruction, optionally corroborated by prior `@gemini-code-assist` summon comments |
 
 ## Rules
