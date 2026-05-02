@@ -16,7 +16,7 @@ Use this skill when the user wants the current local work packaged into a clean 
 ## Core Workflow
 
 1. If you are not already on the intended feature branch, create it immediately before doing other work. Do not continue on `main`, `master`, or another default branch.
-2. Name the branch `<username>/<descriptive-name>`. Do not use `feature/`, `feat/`, or `fix/`. Use the system username when it is clear; otherwise fall back to the agent name.
+2. Name the branch `<username>/<descriptive-name>`. Derive `<descriptive-name>` from the concrete files, packages, issue, or user-facing behavior changed by the tracked diff. Never use a generic action or workflow label such as `commit-staged-files`, `commit-changes`, `update-files`, `work`, or `changes`. Do not use `feature/`, `feat/`, or `fix/`. Use the system username when it is clear; otherwise fall back to the agent name.
 3. Inspect `git status --short`, the current diff, existing repo conventions, and branch history before deciding whether to create a new commit or amend.
 4. Determine whether the current branch is single-commit or multi-commit. Count branch commits relative to the intended PR base when that base is known; otherwise count relative to the repository default-branch merge-base. More than one branch commit is multi-commit.
 5. Complete the requested work and run the smallest relevant verification for the touched files before committing or amending.
@@ -33,6 +33,7 @@ Use this skill when the user wants the current local work packaged into a clean 
 - Create the branch as the first operational step when you are not already on the correct feature branch.
 - Keep using the same feature branch unless the user explicitly redirects you.
 - Never commit directly on `main`, `master`, or another default branch.
+- Reject branch names that describe the Git operation instead of the work. For example, use `beeman/tighten-commit-branch-naming` instead of `beeman/commit-staged-files`.
 - When the user explicitly provides a branch name, use it if it still fits repo policy.
 
 ## Commit Rules
